@@ -17,8 +17,56 @@ import AppleHealthKit, {
 /* Permission options */
 const permissions = {
   permissions: {
-    read: [AppleHealthKit.Constants.Permissions.HeartRate],
-    write: [AppleHealthKit.Constants.Permissions.Steps],
+    read: [
+      AppleHealthKit.Constants.Permissions.MenstrualFlow,
+      AppleHealthKit.Constants.Permissions.Chills,
+      AppleHealthKit.Constants.Permissions.Fatigue,
+      AppleHealthKit.Constants.Permissions.SleepChanges,
+      AppleHealthKit.Constants.Permissions.AbdominalCramps,
+      AppleHealthKit.Constants.Permissions.Acne,
+      AppleHealthKit.Constants.Permissions.AppetiteChanges,
+      AppleHealthKit.Constants.Permissions.BladderIncontinence,
+      AppleHealthKit.Constants.Permissions.Bloating,
+      AppleHealthKit.Constants.Permissions.BreastPain,
+      AppleHealthKit.Constants.Permissions.Constipation,
+      AppleHealthKit.Constants.Permissions.Diarrhea,
+      AppleHealthKit.Constants.Permissions.DrySkin,
+      AppleHealthKit.Constants.Permissions.HairLoss,
+      AppleHealthKit.Constants.Permissions.Headache,
+      AppleHealthKit.Constants.Permissions.HotFlashes,
+      AppleHealthKit.Constants.Permissions.LowerBackPain,
+      AppleHealthKit.Constants.Permissions.MemoryLapse,
+      AppleHealthKit.Constants.Permissions.MoodChanges,
+      AppleHealthKit.Constants.Permissions.Nausea,
+      AppleHealthKit.Constants.Permissions.NightSweats,
+      AppleHealthKit.Constants.Permissions.PelvicPain,
+      AppleHealthKit.Constants.Permissions.VaginalDryness,
+    ],
+    write: [
+      AppleHealthKit.Constants.Permissions.MenstrualFlow,
+      AppleHealthKit.Constants.Permissions.Chills,
+      AppleHealthKit.Constants.Permissions.Fatigue,
+      AppleHealthKit.Constants.Permissions.SleepChanges,
+      AppleHealthKit.Constants.Permissions.AbdominalCramps,
+      AppleHealthKit.Constants.Permissions.Acne,
+      AppleHealthKit.Constants.Permissions.AppetiteChanges,
+      AppleHealthKit.Constants.Permissions.BladderIncontinence,
+      AppleHealthKit.Constants.Permissions.Bloating,
+      AppleHealthKit.Constants.Permissions.BreastPain,
+      AppleHealthKit.Constants.Permissions.Constipation,
+      AppleHealthKit.Constants.Permissions.Diarrhea,
+      AppleHealthKit.Constants.Permissions.DrySkin,
+      AppleHealthKit.Constants.Permissions.HairLoss,
+      AppleHealthKit.Constants.Permissions.Headache,
+      AppleHealthKit.Constants.Permissions.HotFlashes,
+      AppleHealthKit.Constants.Permissions.LowerBackPain,
+      AppleHealthKit.Constants.Permissions.MemoryLapse,
+      AppleHealthKit.Constants.Permissions.MoodChanges,
+      AppleHealthKit.Constants.Permissions.Nausea,
+      AppleHealthKit.Constants.Permissions.NightSweats,
+      AppleHealthKit.Constants.Permissions.PelvicPain,
+      AppleHealthKit.Constants.Permissions.VaginalDryness,
+    ],
   },
 } as HealthKitPermissions;
 
@@ -31,16 +79,19 @@ AppleHealthKit.initHealthKit(permissions, (error: string) => {
 
   /* Can now read or write to HealthKit */
 
-  const options = {
-    startDate: new Date(2020, 1, 1).toISOString(),
-  };
+  let options = {
+    startDate: new Date(1900, 0, 0).toISOString(), // required
+    endDate: new Date().toISOString(), // optional; default now
+    // limit: 10, // optional; default no limit
+  }
 
-  AppleHealthKit.getHeartRateSamples(
-    options,
-    (callbackError: string, results: HealthValue[]) => {
-      /* Samples are now collected from HealthKit */
-    },
-  );
+  AppleHealthKit.getMenstrualFlowSamples(options, (err: Object, results: Array<HealthValue>) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log(results, results.length, "@44")
+  })
 });
 
 export default function App() {

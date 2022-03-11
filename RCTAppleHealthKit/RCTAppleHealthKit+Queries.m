@@ -472,13 +472,123 @@
     [self.healthStore executeQuery:query];
 }
 
+- (void)getMenstrualSymptoms:(NSPredicate *)predicate
+                       limit:(NSUInteger)limit
+                  completion:(void (^)(NSArray *, NSError *))completion {
+
+    NSSortDescriptor *timeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:HKSampleSortIdentifierEndDate
+                                                                       ascending:false];
+
+    NSDictionary *symptomsMapping = @{
+        @"HKCategoryTypeIdentifierChills" : @"Chills",
+        @"HKCategoryTypeIdentifierFatigue" : @"Fatigue",
+        @"HKCategoryTypeIdentifierSleepChanges" : @"Sleep Changes",
+        @"HKCategoryTypeIdentifierAbdominalCramps" : @"Abdominal Cramps",
+        @"HKCategoryTypeIdentifierAcne" : @"Acne",
+        @"HKCategoryTypeIdentifierAppetiteChanges" : @"Appetite Changes",
+        @"HKCategoryTypeIdentifierBladderIncontinence" : @"Bladder Incontinence",
+        @"HKCategoryTypeIdentifierBloating" : @"Bloating",
+        @"HKCategoryTypeIdentifierBreastPain" : @"Breast Pain",
+        @"HKCategoryTypeIdentifierConstipation" : @"Constipation",
+        @"HKCategoryTypeIdentifierDiarrhea" : @"Diarrhea",
+        @"HKCategoryTypeIdentifierDrySkin" : @"Dry Skin",
+        @"HKCategoryTypeIdentifierHairLoss" : @"Hair Loss",
+        @"HKCategoryTypeIdentifierHeadache" : @"Headache",
+        @"HKCategoryTypeIdentifierHotFlashes" : @"Hot Flashes",
+        @"HKCategoryTypeIdentifierLowerBackPain" : @"Lower Back Pain",
+        @"HKCategoryTypeIdentifierMemoryLapse" : @"Memory Lapse",
+        @"HKCategoryTypeIdentifierMoodChanges" : @"Mood Changes",
+        @"HKCategoryTypeIdentifierNausea" : @"Nausea",
+        @"HKCategoryTypeIdentifierNightSweats" : @"Night Sweats",
+        @"HKCategoryTypeIdentifierPelvicPain" : @"Pelvic Pain",
+        @"HKCategoryTypeIdentifierVaginalDryness" : @"Vaginal Dryness",
+    };
+
+    // declare the block
+    void (^handlerBlock)(HKSampleQuery *query, NSArray *results, NSError *error);
+    // create and assign the block
+    handlerBlock = ^(HKSampleQuery *query, NSArray *results, NSError *error) {
+        if (!results) {
+            if (completion) {
+                completion(nil, error);
+            }
+            return;
+        }
+
+        if (completion) {
+            NSMutableArray *data = [NSMutableArray arrayWithCapacity:1];
+
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+                for (HKCategorySample *sample in results) {
+
+                    NSString *startDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.startDate];
+                    NSString *endDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.endDate];
+
+                    NSDictionary *elem = @{
+                        @"symptom" : [symptomsMapping valueForKey: query.objectType.description],
+                        @"startDate" : startDateString,
+                        @"endDate" : endDateString,
+                    };
+                    [data addObject:elem];
+                }
+
+                completion(data, error);
+            });
+        }
+    };
+
+    for (NSString *type in symptomsMapping) {
+        HKCategoryType *menstrualType = [HKCategoryType categoryTypeForIdentifier: type];
+        HKSampleQuery *query = [[HKSampleQuery alloc] initWithSampleType:menstrualType
+                                                              predicate:predicate
+                                                                  limit:limit
+                                                        sortDescriptors:@[timeSortDescriptor]
+                                                         resultsHandler:handlerBlock];
+
+        [self.healthStore executeQuery:query];
+    }
+}
+
+- (NSDictionary *)mergeMenstrualFlowAndSymptoms:(NSDictionary *)data
+                                   symptomsData:(NSDictionary *)symptomsData {
+    for (NSDictionary *menstrualFlowItem in data) {
+        for (NSDictionary *symptomItem in symptomsData) {
+            NSString *menstrualFlowStartDateString = [[menstrualFlowItem valueForKey:@"startDate"] componentsSeparatedByString:@"T"][0];
+            NSString *menstrualFlowEndDateString = [[menstrualFlowItem valueForKey:@"endDate"] componentsSeparatedByString:@"T"][0];
+            NSString *symptomStartDateString = [[symptomItem valueForKey:@"startDate"] componentsSeparatedByString:@"T"][0];
+            NSString *symptomEndDateString = [[symptomItem valueForKey:@"endDate"] componentsSeparatedByString:@"T"][0];
+            if (
+                [menstrualFlowStartDateString isEqualToString:symptomStartDateString] &&
+                [menstrualFlowEndDateString isEqualToString:symptomEndDateString]
+                ) {
+                [[menstrualFlowItem valueForKey:@"symptoms"] addObject:[symptomItem valueForKey:@"symptom"]];
+            }
+        }
+    }
+    return data;
+}
+
 - (void)fetchMenstrualFlowSamplesForPredicate:(NSPredicate *)predicate
                                         limit:(NSUInteger)lim
                                    completion:(void (^)(NSArray *, NSError *))completion {
 
     NSSortDescriptor *timeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:HKSampleSortIdentifierEndDate
                                                                        ascending:false];
+    NSMutableArray *symptomsData = [NSMutableArray arrayWithCapacity:1];
 
+    [self getMenstrualSymptoms:(NSPredicate *)predicate
+                         limit:(NSUInteger)lim
+                    completion:^(NSArray *symptomsResults, NSError *error) {
+                        if(symptomsResults){
+                            [symptomsData addObjectsFromArray:symptomsResults];
+                            NSLog(@"@583, %@", symptomsResults);
+                            return;
+                        } else {
+                            NSLog(@"@586, %@", error);
+                            return;
+                        }
+                    }];
 
     // declare the block
     void (^handlerBlock)(HKSampleQuery *query, NSArray *results, NSError *error);
@@ -528,12 +638,14 @@
                             @"endDate" : endDateString,
                             @"sourceName" : [[[sample sourceRevision] source] name],
                             @"sourceId" : [[[sample sourceRevision] source] bundleIdentifier],
+                            @"symptoms" : [NSMutableArray arrayWithCapacity:1],
                     };
 
                     [data addObject:elem];
                 }
 
-                completion(data, error);
+                NSDictionary *mergeData = [self mergeMenstrualFlowAndSymptoms:data symptomsData:symptomsData];
+                completion(mergeData, error);
             });
         }
     };

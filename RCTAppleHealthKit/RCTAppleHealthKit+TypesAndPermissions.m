@@ -13,6 +13,34 @@
 
 #pragma mark - HealthKit Permissions
 
+- (NSDictionary *)getSymptomsMapping {
+    NSDictionary *symptomsMapping = @{
+        @"Chills" : @"HKCategoryTypeIdentifierChills",
+        @"Fatigue" : @"HKCategoryTypeIdentifierFatigue",
+        @"SleepChanges" : @"HKCategoryTypeIdentifierSleepChanges",
+        @"AbdominalCramps" : @"HKCategoryTypeIdentifierAbdominalCramps",
+        @"Acne" : @"HKCategoryTypeIdentifierAcne",
+        @"AppetiteChanges" : @"HKCategoryTypeIdentifierAppetiteChanges" ,
+        @"BladderIncontinence" : @"HKCategoryTypeIdentifierBladderIncontinence",
+        @"Bloating" : @"HKCategoryTypeIdentifierBloating",
+        @"BreastPain" : @"HKCategoryTypeIdentifierBreastPain",
+        @"Constipation" : @"HKCategoryTypeIdentifierConstipation",
+        @"Diarrhea" : @"HKCategoryTypeIdentifierDiarrhea",
+        @"DrySkin" : @"HKCategoryTypeIdentifierDrySkin",
+        @"HairLoss" : @"HKCategoryTypeIdentifierHairLoss",
+        @"Headache" : @"HKCategoryTypeIdentifierHeadache",
+        @"HotFlashes" : @"HKCategoryTypeIdentifierHotFlashes",
+        @"LowerBackPain" : @"HKCategoryTypeIdentifierLowerBackPain",
+        @"MemoryLapse" : @"HKCategoryTypeIdentifierMemoryLapse",
+        @"MoodChanges" : @"HKCategoryTypeIdentifierMoodChanges",
+        @"Nausea" : @"HKCategoryTypeIdentifierNausea",
+        @"NightSweats" : @"HKCategoryTypeIdentifierNightSweats",
+        @"PelvicPain" : @"HKCategoryTypeIdentifierPelvicPain",
+        @"VaginalDryness" : @"HKCategoryTypeIdentifierVaginalDryness",
+    };
+    return symptomsMapping;
+}
+
 - (nullable HKObjectType *)getReadPermFromText:(nonnull NSString*)key {
     UIDevice *deviceInfo = [UIDevice currentDevice];
     float systemVersion = deviceInfo.systemVersion.floatValue;
@@ -159,6 +187,7 @@
     }
 
     // Reproductive Health identifiers
+    NSDictionary *symptoms = [self getSymptomsMapping];
     if([@"BasalBodyTemperature" isEqualToString:key]) {
         return [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBasalBodyTemperature];
     } else if ([@"CervicalMucusQuality" isEqualToString:key]) {
@@ -177,6 +206,8 @@
          return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSexualActivity];
     } else if ([@"MenstrualFlow" isEqualToString:key]) {
          return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierMenstrualFlow];
+    } else if ([symptoms valueForKey:key]) {
+         return [HKObjectType categoryTypeForIdentifier:[symptoms valueForKey:key]];
     }
 
     // Vital Signs Identifiers
@@ -373,6 +404,7 @@
     }
 
     // Reproductive Health identifiers
+    NSDictionary *symptoms = [self getSymptomsMapping];
     if([@"BasalBodyTemperature" isEqualToString:key]) {
         return [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBasalBodyTemperature];
     } else if ([@"CervicalMucusQuality" isEqualToString:key]) {
@@ -391,6 +423,8 @@
          return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSexualActivity];
     } else if ([@"MenstrualFlow" isEqualToString:key]) {
          return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierMenstrualFlow];
+    } else if ([symptoms valueForKey:key]) {
+         return [HKObjectType categoryTypeForIdentifier:[symptoms valueForKey:key]];
     }
 
     // Sleep
