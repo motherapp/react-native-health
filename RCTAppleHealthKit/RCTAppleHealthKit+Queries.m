@@ -552,17 +552,19 @@
 
 - (NSDictionary *)mergeMenstrualFlowAndSymptoms:(NSDictionary *)data
                                    symptomsData:(NSDictionary *)symptomsData {
-    for (NSDictionary *menstrualFlowItem in data) {
-        for (NSDictionary *symptomItem in symptomsData) {
-            NSString *menstrualFlowStartDateString = [[menstrualFlowItem valueForKey:@"startDate"] componentsSeparatedByString:@"T"][0];
-            NSString *menstrualFlowEndDateString = [[menstrualFlowItem valueForKey:@"endDate"] componentsSeparatedByString:@"T"][0];
-            NSString *symptomStartDateString = [[symptomItem valueForKey:@"startDate"] componentsSeparatedByString:@"T"][0];
-            NSString *symptomEndDateString = [[symptomItem valueForKey:@"endDate"] componentsSeparatedByString:@"T"][0];
-            if (
-                [menstrualFlowStartDateString isEqualToString:symptomStartDateString] &&
-                [menstrualFlowEndDateString isEqualToString:symptomEndDateString]
-                ) {
-                [[menstrualFlowItem valueForKey:@"symptoms"] addObject:[symptomItem valueForKey:@"symptom"]];
+    if (data && symptomsData) {
+        for (NSDictionary *menstrualFlowItem in data) {
+            for (NSDictionary *symptomItem in symptomsData) {
+                NSString *menstrualFlowStartDateString = [[menstrualFlowItem valueForKey:@"startDate"] componentsSeparatedByString:@"T"][0];
+                NSString *menstrualFlowEndDateString = [[menstrualFlowItem valueForKey:@"endDate"] componentsSeparatedByString:@"T"][0];
+                NSString *symptomStartDateString = [[symptomItem valueForKey:@"startDate"] componentsSeparatedByString:@"T"][0];
+                NSString *symptomEndDateString = [[symptomItem valueForKey:@"endDate"] componentsSeparatedByString:@"T"][0];
+                if (
+                    [menstrualFlowStartDateString isEqualToString:symptomStartDateString] &&
+                    [menstrualFlowEndDateString isEqualToString:symptomEndDateString]
+                    ) {
+                    [[menstrualFlowItem valueForKey:@"symptoms"] addObject:[symptomItem valueForKey:@"symptom"]];
+                }
             }
         }
     }
@@ -639,6 +641,7 @@
                             @"sourceName" : [[[sample sourceRevision] source] name],
                             @"sourceId" : [[[sample sourceRevision] source] bundleIdentifier],
                             @"symptoms" : [NSMutableArray arrayWithCapacity:1],
+                            @"metaData" : sample.metadata,
                     };
 
                     [data addObject:elem];
