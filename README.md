@@ -201,6 +201,8 @@ they are splitted in the following categories
 ### Reproductive Health Methods
 - [getBasalBodyTemperatureSamples](/docs/getBasalBodyTemperatureSamples.md)
 - [getMenstrualFlowSamples](/docs/getMenstrualFlowSamples.md)
+- [saveMenstrulFlowSamples](/docs/saveMenstrulFlowSamples.md)
+- [saveSymptomsSamples](/docs/saveSymptomsSamples.md)
 
 ### Fitness Methods
 

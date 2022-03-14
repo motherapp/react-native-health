@@ -300,15 +300,26 @@ RCT_EXPORT_METHOD(getTotalFatSamples:(NSDictionary *)input callback:(RCTResponse
 {
    [self dietary_getTotalFatSamples:input callback:callback];
 }
+
 RCT_EXPORT_METHOD(getBasalBodyTemperatureSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
 {
    [self reproductiveHealth_getBasalBodyTemperatureSamples:input callback:callback];
 }
+
 RCT_EXPORT_METHOD(getMenstrualFlowSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
 {
    [self reproductiveHealth_getMenstrualFlowSamples:input callback:callback];
 }
 
+RCT_EXPORT_METHOD(saveMenstrualFlowSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
+{
+   [self reproductiveHealth_saveMenstrualFlowSample:input callback:callback];
+}
+
+RCT_EXPORT_METHOD(saveSymptomsSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
+{
+   [self reproductiveHealth_saveSymptomsSample:input callback:callback];
+}
 
 RCT_EXPORT_METHOD(saveFood:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
 {
