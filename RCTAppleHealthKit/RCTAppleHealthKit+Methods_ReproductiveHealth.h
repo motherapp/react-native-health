@@ -11,5 +11,4 @@
 - (void)reproductiveHealth_getBasalBodyTemperatureSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
 - (void)reproductiveHealth_getMenstrualFlowSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
 - (void)reproductiveHealth_saveMenstrualFlowSample:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
-- (void)reproductiveHealth_saveSymptomsSample:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
 @end

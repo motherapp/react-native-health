@@ -187,7 +187,6 @@
     }
 
     // Reproductive Health identifiers
-    NSDictionary *symptoms = [self getSymptomsMapping];
     if([@"BasalBodyTemperature" isEqualToString:key]) {
         return [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBasalBodyTemperature];
     } else if ([@"CervicalMucusQuality" isEqualToString:key]) {
@@ -206,8 +205,6 @@
          return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSexualActivity];
     } else if ([@"MenstrualFlow" isEqualToString:key]) {
          return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierMenstrualFlow];
-    } else if ([symptoms valueForKey:key]) {
-         return [HKObjectType categoryTypeForIdentifier:[symptoms valueForKey:key]];
     }
 
     // Vital Signs Identifiers
@@ -278,6 +275,12 @@
         return [RCTAppleHealthKit clinicalTypeFromName:@"ProcedureRecord"];
     } else if ([@"VitalSignRecord" isEqualToString:key]) {
         return [RCTAppleHealthKit clinicalTypeFromName:@"VitalSignRecord"];
+    }
+    
+    // Symptoms
+    NSDictionary *symptoms = [self getSymptomsMapping];
+    if ([symptoms valueForKey:key]) {
+         return [HKObjectType categoryTypeForIdentifier:[symptoms valueForKey:key]];
     }
 
     return nil;
@@ -404,7 +407,6 @@
     }
 
     // Reproductive Health identifiers
-    NSDictionary *symptoms = [self getSymptomsMapping];
     if([@"BasalBodyTemperature" isEqualToString:key]) {
         return [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBasalBodyTemperature];
     } else if ([@"CervicalMucusQuality" isEqualToString:key]) {
@@ -423,8 +425,6 @@
          return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSexualActivity];
     } else if ([@"MenstrualFlow" isEqualToString:key]) {
          return [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierMenstrualFlow];
-    } else if ([symptoms valueForKey:key]) {
-         return [HKObjectType categoryTypeForIdentifier:[symptoms valueForKey:key]];
     }
 
     // Sleep
@@ -445,6 +445,12 @@
     // Lab and tests
     if ([@"BloodAlcoholContent" isEqualToString: key]) {
         return [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBloodAlcoholContent];
+    }
+    
+    // Symptoms
+    NSDictionary *symptoms = [self getSymptomsMapping];
+    if ([symptoms valueForKey:key]) {
+         return [HKObjectType categoryTypeForIdentifier:[symptoms valueForKey:key]];
     }
 
     return nil;
