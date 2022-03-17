@@ -202,6 +202,7 @@ they are splitted in the following categories
 - [getBasalBodyTemperatureSamples](/docs/getBasalBodyTemperatureSamples.md)
 - [getMenstrualFlowSamples](/docs/getMenstrualFlowSamples.md)
 - [saveMenstrulFlowSamples](/docs/saveMenstrulFlowSamples.md)
+- [getSymptomsSamples](/docs/getSymptomsSamples.md)
 - [saveSymptomsSamples](/docs/saveSymptomsSamples.md)
 
 ### Fitness Methods
