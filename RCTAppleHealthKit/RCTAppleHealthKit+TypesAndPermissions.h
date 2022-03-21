@@ -18,5 +18,6 @@
 - (NSString *)getAuthorizationStatusString:(HKAuthorizationStatus)status;
 + (NSDictionary *)getStringToWorkoutActivityTypeDictionary;
 + (NSDictionary *)getNumberToWorkoutNameDictionary;
+- (NSDictionary *)getSymptomsMapping;
 
 @end

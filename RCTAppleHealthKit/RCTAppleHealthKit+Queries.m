@@ -472,6 +472,94 @@
     [self.healthStore executeQuery:query];
 }
 
+- (void)fetchMenstrualFlowWithStmptomsSamplesForPredicate:(NSPredicate *)predicate
+                                                    limit:(NSUInteger)limit
+                                               completion:(void (^)(NSArray *, NSError *))completion {
+
+    NSSortDescriptor *timeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:HKSampleSortIdentifierEndDate
+                                                                       ascending:false];
+    
+    NSMutableArray *allSymptomsData = [NSMutableArray arrayWithCapacity:1];
+    dispatch_group_t group = dispatch_group_create();
+
+    NSDictionary *symptomsMapping = @{
+        @"HKCategoryTypeIdentifierChills" : @"Chills",
+        @"HKCategoryTypeIdentifierFatigue" : @"Fatigue",
+        @"HKCategoryTypeIdentifierSleepChanges" : @"Sleep Changes",
+        @"HKCategoryTypeIdentifierAbdominalCramps" : @"Abdominal Cramps",
+        @"HKCategoryTypeIdentifierAcne" : @"Acne",
+        @"HKCategoryTypeIdentifierAppetiteChanges" : @"Appetite Changes",
+        @"HKCategoryTypeIdentifierBladderIncontinence" : @"Bladder Incontinence",
+        @"HKCategoryTypeIdentifierBloating" : @"Bloating",
+        @"HKCategoryTypeIdentifierBreastPain" : @"Breast Pain",
+        @"HKCategoryTypeIdentifierConstipation" : @"Constipation",
+        @"HKCategoryTypeIdentifierDiarrhea" : @"Diarrhea",
+        @"HKCategoryTypeIdentifierDrySkin" : @"Dry Skin",
+        @"HKCategoryTypeIdentifierHairLoss" : @"Hair Loss",
+        @"HKCategoryTypeIdentifierHeadache" : @"Headache",
+        @"HKCategoryTypeIdentifierHotFlashes" : @"Hot Flashes",
+        @"HKCategoryTypeIdentifierLowerBackPain" : @"Lower Back Pain",
+        @"HKCategoryTypeIdentifierMemoryLapse" : @"Memory Lapse",
+        @"HKCategoryTypeIdentifierMoodChanges" : @"Mood Changes",
+        @"HKCategoryTypeIdentifierNausea" : @"Nausea",
+        @"HKCategoryTypeIdentifierNightSweats" : @"Night Sweats",
+        @"HKCategoryTypeIdentifierPelvicPain" : @"Pelvic Pain",
+        @"HKCategoryTypeIdentifierVaginalDryness" : @"Vaginal Dryness",
+    };
+
+    // declare the block
+    void (^handlerBlock)(HKSampleQuery *query, NSArray *results, NSError *error);
+    // create and assign the block
+    handlerBlock = ^(HKSampleQuery *query, NSArray *results, NSError *error) {
+        if (!results) {
+            if (completion) {
+                completion(nil, error);
+            }
+            return;
+        }
+
+        if (completion) {
+            NSMutableArray *data = [NSMutableArray arrayWithCapacity:1];
+
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+                for (HKCategorySample *sample in results) {
+
+                    NSString *startDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.startDate];
+                    NSString *endDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.endDate];
+
+                    NSDictionary *elem = @{
+                        @"symptom" : [symptomsMapping valueForKey: query.objectType.description],
+                        @"startDate" : startDateString,
+                        @"endDate" : endDateString,
+                    };
+                    [data addObject:elem];
+                }
+
+                [allSymptomsData addObjectsFromArray:data];
+                dispatch_group_leave(group);
+            });
+        }
+    };
+
+    for (NSString *type in symptomsMapping) {
+        dispatch_group_enter(group);
+        HKCategoryType *menstrualType = [HKCategoryType categoryTypeForIdentifier: type];
+        HKSampleQuery *query = [[HKSampleQuery alloc] initWithSampleType:menstrualType
+                                                              predicate:predicate
+                                                                  limit:limit
+                                                        sortDescriptors:@[timeSortDescriptor]
+                                                         resultsHandler:handlerBlock];
+
+        [self.healthStore executeQuery:query];
+    }
+
+    dispatch_group_notify(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        completion(allSymptomsData, nil);
+    });
+
+}
+
 - (void)fetchMenstrualFlowSamplesForPredicate:(NSPredicate *)predicate
                                         limit:(NSUInteger)lim
                                    completion:(void (^)(NSArray *, NSError *))completion {
@@ -479,7 +567,7 @@
     NSSortDescriptor *timeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:HKSampleSortIdentifierEndDate
                                                                        ascending:false];
 
-
+    
     // declare the block
     void (^handlerBlock)(HKSampleQuery *query, NSArray *results, NSError *error);
     // create and assign the block
@@ -528,6 +616,7 @@
                             @"endDate" : endDateString,
                             @"sourceName" : [[[sample sourceRevision] source] name],
                             @"sourceId" : [[[sample sourceRevision] source] bundleIdentifier],
+                            @"metadata" : sample.metadata,
                     };
 
                     [data addObject:elem];

@@ -10,6 +10,7 @@
 #import "RCTAppleHealthKit+Methods_ReproductiveHealth.h"
 #import "RCTAppleHealthKit+Queries.h"
 #import "RCTAppleHealthKit+Utils.h"
+#import "RCTAppleHealthKit+TypesAndPermissions.h"
 
 @implementation RCTAppleHealthKit (Methods_ReproductiveHealth)
 
@@ -70,5 +71,59 @@
                                          }
                                      }];
 
+}
+
+- (void)reproductiveHealth_saveMenstrualFlowSample:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
+{
+    HKCategoryType *menstrualFlowType = [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierMenstrualFlow];
+    NSDate *startDate = [RCTAppleHealthKit dateFromOptions:input key:@"startDate" withDefault:nil];
+    NSDate *endDate = [RCTAppleHealthKit dateFromOptions:input key:@"endDate" withDefault:startDate];
+    NSString *value = [RCTAppleHealthKit stringFromOptions:input key:@"value" withDefault:@"UNSPECIFIED"];
+    NSPredicate *predicate = [RCTAppleHealthKit predicateForSamplesOnDay:startDate];
+    NSDictionary *metadata = [RCTAppleHealthKit metadataFromOptions:input withDefault:nil];
+
+    if (![metadata valueForKey:@"HKMenstrualCycleStart"] || !startDate) {
+        callback(@[RCTMakeError(@"HKMenstrualCycleStart / startDate is required in options", nil, nil)]);
+        return;
+    }
+
+    NSInteger *menstrualFlowValue;
+
+    if ([value isEqualToString:@"NONE"]) {
+        menstrualFlowValue = HKCategoryValueMenstrualFlowNone;
+    } else if ([value isEqualToString:@"LIGHT"]) {
+        menstrualFlowValue = HKCategoryValueMenstrualFlowLight;
+    } else if ([value isEqualToString:@"MEDIUM"]) {
+        menstrualFlowValue = HKCategoryValueMenstrualFlowMedium;
+    } else if ([value isEqualToString:@"HEAVY"]) {
+        menstrualFlowValue = HKCategoryValueMenstrualFlowHeavy;
+    } else {
+        menstrualFlowValue = HKCategoryValueMenstrualFlowUnspecified;
+    }
+
+    HKCategorySample *menstrualFlowSample = [HKCategorySample categorySampleWithType:menstrualFlowType
+                                                                               value:menstrualFlowValue
+                                                                           startDate:startDate
+                                                                             endDate:endDate
+                                                                            metadata:metadata];
+
+    // delete startDate data and save new data
+    [self.healthStore deleteObjectsOfType:menstrualFlowType predicate:predicate withCompletion:^(BOOL success, NSUInteger deletedObjectCount, NSError * _Nullable error) {
+        if (!success) {
+            NSLog(@"An error occured while deleting the menstrual flow sample %@. The error was: ", error);
+            callback(@[RCTMakeError(@"An error occured while deleting the menstrual flow sample", error, nil)]);
+            return;
+        }
+        NSLog(@"delete menstrual flow object count: %@", @(deletedObjectCount));
+    }];
+
+    [self.healthStore saveObject:menstrualFlowSample withCompletion:^(BOOL success, NSError *error) {
+        if (!success) {
+            NSLog(@"An error occured while saving the menstrual flow sample %@. The error was: ", error);
+            callback(@[RCTMakeError(@"An error occured while saving the menstrual flow sample", error, nil)]);
+            return;
+        }
+        callback(@[[NSNull null], [menstrualFlowSample.UUID UUIDString]]);
+    }];
 }
 @end

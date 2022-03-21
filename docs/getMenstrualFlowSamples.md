@@ -33,11 +33,11 @@ Example output:
 ```json
 [ 
   { 
-    value: 'LIGHT',
-    sourceId: 'com.apple.Health',
-    sourceName: 'Health',
-    startDate: '2021-05-14T12:00:00.000+0300',
-    endDate: '2021-05-14T12:00:00.000+0300'
+    "value": "LIGHT",
+    "sourceId": "com.apple.Health",
+    "sourceName": "Health",
+    "startDate": "2021-05-14T12:00:00.000+0300",
+    "endDate": "2021-05-14T12:00:00.000+0300",
   } 
 ]
 ```

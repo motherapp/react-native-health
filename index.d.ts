@@ -414,6 +414,26 @@ declare module 'react-native-health' {
       callback: (err: string, results: Array<HealthActivitySummary>) => void,
     ): void
 
+    getMenstrualFlowSamples(
+      options: HealthInputOptions,
+      callback: (err: string, results: Array<HealthValue>) => void,
+    ): void
+
+    getSymptomsSamples(
+      options: HealthInputOptions,
+      callback: (err: string, results: Array<HealthValue>) => void,
+    ): void
+
+    saveMenstrualFlowSamples(
+      options: HealthInputOptions,
+      callback: (err: string, results: HealthValue) => void,
+    ): void
+
+    saveSymptomsSamples(
+      options: HealthInputOptions,
+      callback: (err: string, results: Array<HealthValue>) => void,
+    ): void
+
     Constants: Constants
   }
 
@@ -714,6 +734,29 @@ declare module 'react-native-health' {
     WalkingHeartRateAverage = 'WalkingHeartRateAverage',
     Weight = 'Weight',
     Workout = 'Workout',
+    MenstrualFlow = 'MenstrualFlow',
+    Chills = "Chills",
+    Fatigue = "Fatigue",
+    SleepChanges = "SleepChanges",
+    AbdominalCramps = "AbdominalCramps",
+    Acne = "Acne",
+    AppetiteChanges = "AppetiteChanges" ,
+    BladderIncontinence = "BladderIncontinence",
+    Bloating = "Bloating",
+    BreastPain = "BreastPain",
+    Constipation = "Constipation",
+    Diarrhea = "Diarrhea",
+    DrySkin = "DrySkin",
+    HairLoss = "HairLoss",
+    Headache = "Headache",
+    HotFlashes = "HotFlashes",
+    LowerBackPain = "LowerBackPain",
+    MemoryLapse = "MemoryLapse",
+    MoodChanges = "MoodChanges",
+    Nausea = "Nausea",
+    NightSweats = "NightSweats",
+    PelvicPain = "PelvicPain",
+    VaginalDryness = "VaginalDryness",
   }
 
   export enum HealthUnit {

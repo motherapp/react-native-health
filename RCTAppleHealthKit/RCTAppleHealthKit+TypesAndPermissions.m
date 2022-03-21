@@ -13,6 +13,34 @@
 
 #pragma mark - HealthKit Permissions
 
+- (NSDictionary *)getSymptomsMapping {
+    NSDictionary *symptomsMapping = @{
+        @"Chills" : @"HKCategoryTypeIdentifierChills",
+        @"Fatigue" : @"HKCategoryTypeIdentifierFatigue",
+        @"SleepChanges" : @"HKCategoryTypeIdentifierSleepChanges",
+        @"AbdominalCramps" : @"HKCategoryTypeIdentifierAbdominalCramps",
+        @"Acne" : @"HKCategoryTypeIdentifierAcne",
+        @"AppetiteChanges" : @"HKCategoryTypeIdentifierAppetiteChanges" ,
+        @"BladderIncontinence" : @"HKCategoryTypeIdentifierBladderIncontinence",
+        @"Bloating" : @"HKCategoryTypeIdentifierBloating",
+        @"BreastPain" : @"HKCategoryTypeIdentifierBreastPain",
+        @"Constipation" : @"HKCategoryTypeIdentifierConstipation",
+        @"Diarrhea" : @"HKCategoryTypeIdentifierDiarrhea",
+        @"DrySkin" : @"HKCategoryTypeIdentifierDrySkin",
+        @"HairLoss" : @"HKCategoryTypeIdentifierHairLoss",
+        @"Headache" : @"HKCategoryTypeIdentifierHeadache",
+        @"HotFlashes" : @"HKCategoryTypeIdentifierHotFlashes",
+        @"LowerBackPain" : @"HKCategoryTypeIdentifierLowerBackPain",
+        @"MemoryLapse" : @"HKCategoryTypeIdentifierMemoryLapse",
+        @"MoodChanges" : @"HKCategoryTypeIdentifierMoodChanges",
+        @"Nausea" : @"HKCategoryTypeIdentifierNausea",
+        @"NightSweats" : @"HKCategoryTypeIdentifierNightSweats",
+        @"PelvicPain" : @"HKCategoryTypeIdentifierPelvicPain",
+        @"VaginalDryness" : @"HKCategoryTypeIdentifierVaginalDryness",
+    };
+    return symptomsMapping;
+}
+
 - (nullable HKObjectType *)getReadPermFromText:(nonnull NSString*)key {
     UIDevice *deviceInfo = [UIDevice currentDevice];
     float systemVersion = deviceInfo.systemVersion.floatValue;
@@ -248,6 +276,12 @@
     } else if ([@"VitalSignRecord" isEqualToString:key]) {
         return [RCTAppleHealthKit clinicalTypeFromName:@"VitalSignRecord"];
     }
+    
+    // Symptoms
+    NSDictionary *symptoms = [self getSymptomsMapping];
+    if ([symptoms valueForKey:key]) {
+         return [HKObjectType categoryTypeForIdentifier:[symptoms valueForKey:key]];
+    }
 
     return nil;
 }
@@ -411,6 +445,12 @@
     // Lab and tests
     if ([@"BloodAlcoholContent" isEqualToString: key]) {
         return [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBloodAlcoholContent];
+    }
+    
+    // Symptoms
+    NSDictionary *symptoms = [self getSymptomsMapping];
+    if ([symptoms valueForKey:key]) {
+         return [HKObjectType categoryTypeForIdentifier:[symptoms valueForKey:key]];
     }
 
     return nil;

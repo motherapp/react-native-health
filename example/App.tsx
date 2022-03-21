@@ -17,42 +17,175 @@ import AppleHealthKit, {
 /* Permission options */
 const permissions = {
   permissions: {
-    read: [AppleHealthKit.Constants.Permissions.HeartRate],
-    write: [AppleHealthKit.Constants.Permissions.Steps],
+    read: [
+      AppleHealthKit.Constants.Permissions.MenstrualFlow,
+      AppleHealthKit.Constants.Permissions.Chills,
+      AppleHealthKit.Constants.Permissions.Fatigue,
+      AppleHealthKit.Constants.Permissions.SleepChanges,
+      AppleHealthKit.Constants.Permissions.AbdominalCramps,
+      AppleHealthKit.Constants.Permissions.Acne,
+      AppleHealthKit.Constants.Permissions.AppetiteChanges,
+      AppleHealthKit.Constants.Permissions.BladderIncontinence,
+      AppleHealthKit.Constants.Permissions.Bloating,
+      AppleHealthKit.Constants.Permissions.BreastPain,
+      AppleHealthKit.Constants.Permissions.Constipation,
+      AppleHealthKit.Constants.Permissions.Diarrhea,
+      AppleHealthKit.Constants.Permissions.DrySkin,
+      AppleHealthKit.Constants.Permissions.HairLoss,
+      AppleHealthKit.Constants.Permissions.Headache,
+      AppleHealthKit.Constants.Permissions.HotFlashes,
+      AppleHealthKit.Constants.Permissions.LowerBackPain,
+      AppleHealthKit.Constants.Permissions.MemoryLapse,
+      AppleHealthKit.Constants.Permissions.MoodChanges,
+      AppleHealthKit.Constants.Permissions.Nausea,
+      AppleHealthKit.Constants.Permissions.NightSweats,
+      AppleHealthKit.Constants.Permissions.PelvicPain,
+      AppleHealthKit.Constants.Permissions.VaginalDryness,
+    ],
+    write: [
+      AppleHealthKit.Constants.Permissions.MenstrualFlow,
+      AppleHealthKit.Constants.Permissions.Chills,
+      AppleHealthKit.Constants.Permissions.Fatigue,
+      AppleHealthKit.Constants.Permissions.SleepChanges,
+      AppleHealthKit.Constants.Permissions.AbdominalCramps,
+      AppleHealthKit.Constants.Permissions.Acne,
+      AppleHealthKit.Constants.Permissions.AppetiteChanges,
+      AppleHealthKit.Constants.Permissions.BladderIncontinence,
+      AppleHealthKit.Constants.Permissions.Bloating,
+      AppleHealthKit.Constants.Permissions.BreastPain,
+      AppleHealthKit.Constants.Permissions.Constipation,
+      AppleHealthKit.Constants.Permissions.Diarrhea,
+      AppleHealthKit.Constants.Permissions.DrySkin,
+      AppleHealthKit.Constants.Permissions.HairLoss,
+      AppleHealthKit.Constants.Permissions.Headache,
+      AppleHealthKit.Constants.Permissions.HotFlashes,
+      AppleHealthKit.Constants.Permissions.LowerBackPain,
+      AppleHealthKit.Constants.Permissions.MemoryLapse,
+      AppleHealthKit.Constants.Permissions.MoodChanges,
+      AppleHealthKit.Constants.Permissions.Nausea,
+      AppleHealthKit.Constants.Permissions.NightSweats,
+      AppleHealthKit.Constants.Permissions.PelvicPain,
+      AppleHealthKit.Constants.Permissions.VaginalDryness,
+    ],
   },
 } as HealthKitPermissions;
 
-AppleHealthKit.initHealthKit(permissions, (error: string) => {
-  /* Called after we receive a response from the system */
+export default function App() {
+  const [menstrualData, setMenstrualData] = useState<any>({});
+  const [menstrualResult, setMenstrualResult] = useState<any>({});
+  const [symptomsData, setSymptomsData] = useState<any>({});
+  const [symptomsResult, setSymptomsResult] = useState<any>({});
 
-  if (error) {
-    console.log('[ERROR] Cannot grant permissions!');
+  const handleGetPermissionPressed = () => {
+    AppleHealthKit.initHealthKit(permissions, (error: string) => {
+      /* Called after we receive a response from the system */
+    
+      AppleHealthKit.getAuthStatus(permissions, (err, results) => {
+        console.log(err, results, 'AUTH STATUS')
+      })
+    
+      if (error) {
+        console.log('[ERROR] Cannot grant permissions!');
+      }
+    });
   }
 
-  /* Can now read or write to HealthKit */
-
-  const options = {
-    startDate: new Date(2020, 1, 1).toISOString(),
+  const handleGetDataPressed = () => {
+    let options = {
+      startDate: new Date(1900, 0, 0).toISOString(), // required
+      // endDate: "2022-03-14T12:00:00.000+0800",
+      // limit: 10, // optional; default no limit
+    }
+  
+    AppleHealthKit.getMenstrualFlowSamples(options, (err: Object, results: Array<HealthValue>) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log(results)
+      setMenstrualData(results)
+    })
   };
 
-  AppleHealthKit.getHeartRateSamples(
-    options,
-    (callbackError: string, results: HealthValue[]) => {
-      /* Samples are now collected from HealthKit */
-    },
-  );
-});
-
-export default function App() {
-  const [authStatus, setAuthStatus] = useState<any>({});
-
-  const handlePressGetAuthStatus = () => {
-    AppleHealthKit.getAuthStatus(permissions, (err, result) => {
+  const handleSaveMenstrualDataPressed = () => {
+    let options = {
+      startDate: new Date(2022, 2, 14).toISOString(), // required
+      endDate: new Date(2022, 2, 14).toISOString(), // optional; default startDate
+      value: "MEDIUM", // optional; (NONE, LIGHT, MEDIUM, HEAVY)
+      metadata:{
+        HKMenstrualCycleStart:0, // required
+        HKWasUserEntered:1
+      },
+    }
+  
+    AppleHealthKit.saveMenstrualFlowSamples(options, (err: Object, results: Array<HealthValue>) => {
       if (err) {
-        console.error(err);
+        console.log(err);
+        return;
       }
-      setAuthStatus(result);
-    });
+      console.log(results)
+      setMenstrualResult(results)
+    })
+  };
+
+  const handleGetSymptomsDataPressed = () => {
+    let options = {
+      startDate: new Date(1900, 0, 0).toISOString(), // required
+      // endDate: "2022-03-14T12:00:00.000+0800",
+      // limit: 10, // optional; default no limit
+    }
+  
+    AppleHealthKit.getSymptomsSamples(options, (err: Object, results: Array<HealthValue>) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log(results)
+      setSymptomsData(results)
+    })
+  };
+
+  const handleSaveSymptomsDataPressed = () => {
+    let options = {
+      startDate: new Date(2022, 2, 14).toISOString(), // required
+      endDate: new Date(2022, 2, 14).toISOString(), // optional; default startDate
+      symptoms:[
+        "Mood Changes",
+        "Constipation",
+        "Fatigue",
+        "Hot Flashes",
+        "Lower Back Pain",
+        "Sleep Changes",
+        "Pelvic Pain",
+        "Night Sweats",
+        "Abdominal Cramps",
+        "Acne",
+        "Memory Lapse",
+        "Bladder Incontinence",
+        "Headache",
+        "Nausea",
+        "Hair Loss",
+        "Bloating",
+        "Diarrhea",
+        "Chills",
+        "Dry Skin",
+        "Vaginal Dryness",
+        "Breast Pain",
+        "Appetite Changes"
+      ],
+      metadata:{
+        HKWasUserEntered:1
+      },
+    }
+  
+    AppleHealthKit.saveSymptomsSamples(options, (err: Object, results: Array<HealthValue>) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log(results)
+      setSymptomsResult(results)
+    })
   };
 
   return (
@@ -67,11 +200,35 @@ export default function App() {
               <Text style={styles.sectionTitle}>
                 React Native Health Example
               </Text>
-              <Text onPress={handlePressGetAuthStatus}>
-                Press me to get Auth Status
+              <Text onPress={handleGetPermissionPressed}>
+                Press me to get permissions
               </Text>
               <Text style={styles.sectionDescription}>
-                {JSON.stringify(authStatus, null, 2)}
+                {}
+              </Text>
+              <Text onPress={handleGetDataPressed}>
+                Press me to get menstrual flow data
+              </Text>
+              <Text style={styles.sectionDescription}>
+                {JSON.stringify(menstrualData, null, 2)}
+              </Text>
+              <Text onPress={handleSaveMenstrualDataPressed}>
+                Press me to save menstrual flow data
+              </Text>
+              <Text style={styles.sectionDescription}>
+                {JSON.stringify(menstrualResult, null, 2)}
+              </Text>
+              <Text onPress={handleGetSymptomsDataPressed}>
+                Press me to get symptoms data
+              </Text>
+              <Text style={styles.sectionDescription}>
+                {JSON.stringify(symptomsData, null, 2)}
+              </Text>
+              <Text onPress={handleSaveSymptomsDataPressed}>
+                Press me to save symptoms data
+              </Text>
+              <Text style={styles.sectionDescription}>
+                {JSON.stringify(symptomsResult, null, 2)}
               </Text>
             </View>
           </View>

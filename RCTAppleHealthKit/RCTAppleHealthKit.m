@@ -24,6 +24,7 @@
 #import "RCTAppleHealthKit+Methods_Summary.h"
 #import "RCTAppleHealthKit+Methods_ClinicalRecords.h"
 #import "RCTAppleHealthKit+Methods_ReproductiveHealth.h"
+#import "RCTAppleHealthKit+Methods_Symptoms.h"
 
 #import <React/RCTBridgeModule.h>
 #import <React/RCTEventDispatcher.h>
@@ -300,15 +301,31 @@ RCT_EXPORT_METHOD(getTotalFatSamples:(NSDictionary *)input callback:(RCTResponse
 {
    [self dietary_getTotalFatSamples:input callback:callback];
 }
+
 RCT_EXPORT_METHOD(getBasalBodyTemperatureSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
 {
    [self reproductiveHealth_getBasalBodyTemperatureSamples:input callback:callback];
 }
+
 RCT_EXPORT_METHOD(getMenstrualFlowSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
 {
    [self reproductiveHealth_getMenstrualFlowSamples:input callback:callback];
 }
 
+RCT_EXPORT_METHOD(saveMenstrualFlowSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
+{
+   [self reproductiveHealth_saveMenstrualFlowSample:input callback:callback];
+}
+
+RCT_EXPORT_METHOD(getSymptomsSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
+{
+   [self symptoms_getSymptomsSample:input callback:callback];
+}
+
+RCT_EXPORT_METHOD(saveSymptomsSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
+{
+   [self symptoms_saveSymptomsSample:input callback:callback];
+}
 
 RCT_EXPORT_METHOD(saveFood:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
 {
