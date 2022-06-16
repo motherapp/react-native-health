@@ -31,159 +31,136 @@ Example output:
 ```json
 [
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Constipation"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Abdominal Cramps",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Mood Changes"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Sleep Changes",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Fatigue"
+      "endDate":"2022-04-08T12:00:00.000+0800",
+      "startDate":"2022-04-08T12:00:00.000+0800",
+      "symptom":"Lower Back Pain",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Lower Back Pain"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Lower Back Pain",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Abdominal Cramps"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Hot Flashes",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-05T12:00:00.000+0800",
-      "startDate":"2022-03-05T12:00:00.000+0800",
-      "symptom":"Abdominal Cramps"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Acne",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Sleep Changes"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Nausea",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Hot Flashes"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Night Sweats",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Acne"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Pelvic Pain",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-05T12:00:00.000+0800",
-      "startDate":"2022-03-05T12:00:00.000+0800",
-      "symptom":"Acne"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Bladder Incontinence",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Nausea"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Memory Lapse",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Pelvic Pain"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Hair Loss",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Night Sweats"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Headache",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Memory Lapse"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Vaginal Dryness",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Hair Loss"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Chills",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Bladder Incontinence"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Diarrhea",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-07T12:00:00.000+0800",
-      "startDate":"2022-03-07T12:00:00.000+0800",
-      "symptom":"Bladder Incontinence"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Appetite Changes",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-06T12:00:00.000+0800",
-      "startDate":"2022-03-06T12:00:00.000+0800",
-      "symptom":"Bladder Incontinence"
+      "endDate":"2022-04-08T12:00:00.000+0800",
+      "startDate":"2022-04-08T12:00:00.000+0800",
+      "symptom":"Breast Pain",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Headache"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Breast Pain",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Chills"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Bloating",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Vaginal Dryness"
+      "endDate":"2022-04-08T12:00:00.000+0800",
+      "startDate":"2022-04-08T12:00:00.000+0800",
+      "symptom":"Dry Skin",
+      "value":"Present"
    },
    {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Diarrhea"
-   },
-   {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Appetite Changes"
-   },
-   {
-      "endDate":"2022-03-05T12:00:00.000+0800",
-      "startDate":"2022-03-05T12:00:00.000+0800",
-      "symptom":"Appetite Changes"
-   },
-   {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Breast Pain"
-   },
-   {
-      "endDate":"2022-03-07T12:00:00.000+0800",
-      "startDate":"2022-03-07T12:00:00.000+0800",
-      "symptom":"Breast Pain"
-   },
-   {
-      "endDate":"2022-03-06T12:00:00.000+0800",
-      "startDate":"2022-03-06T12:00:00.000+0800",
-      "symptom":"Breast Pain"
-   },
-   {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Dry Skin"
-   },
-   {
-      "endDate":"2022-03-14T00:00:00.000+0800",
-      "startDate":"2022-03-14T00:00:00.000+0800",
-      "symptom":"Bloating"
-   },
-   {
-      "endDate":"2022-03-07T12:00:00.000+0800",
-      "startDate":"2022-03-07T12:00:00.000+0800",
-      "symptom":"Bloating"
-   },
-   {
-      "endDate":"2022-03-06T12:00:00.000+0800",
-      "startDate":"2022-03-06T12:00:00.000+0800",
-      "symptom":"Bloating"
+      "endDate":"2022-04-08T00:00:00.000+0800",
+      "startDate":"2022-04-08T00:00:00.000+0800",
+      "symptom":"Dry Skin",
+      "value":"Present"
    }
 ]
 ```

@@ -73,15 +73,46 @@
 
     [self deleteMenstrualSymptomsSample:predicate];
 
-    for (NSString *symptom in symptoms) {
-        NSString *keySymptom = [symptom stringByReplacingOccurrencesOfString:@" " withString:@""];
+    for (NSDictionary *symptom in symptoms) {
+        NSString *keySymptom = [[symptom valueForKey:@"symptom"] stringByReplacingOccurrencesOfString:@" " withString:@""];
+        NSString *value = [RCTAppleHealthKit stringFromOptions:symptom key:@"value" withDefault:@"Not Present"];
+        NSInteger *symptomValue;
+        if ([keySymptom isEqualToString:@"SleepChanges"] || [keySymptom isEqualToString:@"MoodChanges"]) {
+            if ([value isEqualToString:@"Not Present"]) {
+                symptomValue = HKCategoryValueSeverityNotPresent;
+            } else {
+                symptomValue = HKCategoryValueSeverityUnspecified;
+            }
+        } else if ([keySymptom isEqualToString:@"AppetiteChanges"]) {
+            if ([value isEqualToString:@"Not Present"]) {
+                symptomValue = HKCategoryValueAppetiteChangesNoChange;
+            } else if ([value isEqualToString:@"Present"]) {
+                symptomValue = HKCategoryValueAppetiteChangesUnspecified;
+            } else if ([value isEqualToString:@"Mild"]) {
+                symptomValue = HKCategoryValueAppetiteChangesDecreased;
+            } else {
+                symptomValue = HKCategoryValueAppetiteChangesIncreased;
+            }
+        }else {
+            if ([value isEqualToString:@"Not Present"]) {
+                symptomValue = HKCategoryValueSeverityNotPresent;
+            } else if ([value isEqualToString:@"Mild"]) {
+                symptomValue = HKCategoryValueSeverityMild;
+            } else if ([value isEqualToString:@"Moderate"]) {
+                symptomValue = HKCategoryValueSeverityModerate;
+            } else if ([value isEqualToString:@"Severe"]) {
+                symptomValue = HKCategoryValueSeveritySevere;
+            } else {
+                symptomValue = HKCategoryValueSeverityUnspecified;
+            }
+        }
 
         if ([symptomsMapping valueForKey:keySymptom]) {
 
             HKCategoryType *symptomType = [HKObjectType categoryTypeForIdentifier:[symptomsMapping valueForKey:keySymptom]];
 
             HKCategorySample *symptomSample = [HKCategorySample categorySampleWithType:symptomType
-                                                                                       value:HKCategoryValueSeverityUnspecified
+                                                                                       value:symptomValue
                                                                                    startDate:startDate
                                                                                      endDate:endDate];
 
@@ -94,7 +125,8 @@
             }];
 
             NSDictionary *elem = @{
-                @"symptom" : symptom,
+                @"symptom" : keySymptom,
+                @"value" : value,
                 @"UUID" : [symptomSample.UUID UUIDString],
             };
 

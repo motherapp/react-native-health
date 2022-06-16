@@ -131,7 +131,7 @@ export default function App() {
   const handleGetSymptomsDataPressed = () => {
     let options = {
       startDate: new Date(1900, 0, 0).toISOString(), // required
-      // endDate: "2022-03-14T12:00:00.000+0800",
+      endDate: "2022-05-14T12:00:00.000+0800",
       // limit: 10, // optional; default no limit
     }
   
@@ -147,31 +147,31 @@ export default function App() {
 
   const handleSaveSymptomsDataPressed = () => {
     let options = {
-      startDate: new Date(2022, 2, 14).toISOString(), // required
-      endDate: new Date(2022, 2, 14).toISOString(), // optional; default startDate
+      startDate: new Date(2022, 5, 14).toISOString(), // required
+      endDate: new Date(2022, 5, 14).toISOString(), // optional; default startDate
       symptoms:[
-        "Mood Changes",
-        "Constipation",
-        "Fatigue",
-        "Hot Flashes",
-        "Lower Back Pain",
-        "Sleep Changes",
-        "Pelvic Pain",
-        "Night Sweats",
-        "Abdominal Cramps",
-        "Acne",
-        "Memory Lapse",
-        "Bladder Incontinence",
-        "Headache",
-        "Nausea",
-        "Hair Loss",
-        "Bloating",
-        "Diarrhea",
-        "Chills",
-        "Dry Skin",
-        "Vaginal Dryness",
-        "Breast Pain",
-        "Appetite Changes"
+        {symptom: "Mood Changes", value: "Not Present"}, // value is optional; (Not Present, Present, Mild, Moderate, Severe)
+        {symptom: "Constipation", value: "Severe"},
+        {symptom: "Fatigue", value: "Severe"},
+        {symptom: "Hot Flashes", value: "Severe"},
+        {symptom: "Lower Back Pain", value: "Severe"},
+        {symptom: "Sleep Changes", value: "Moderate"},
+        {symptom: "Pelvic Pain", value: "Moderate"},
+        {symptom: "Night Sweats", value: "Moderate"},
+        {symptom: "Abdominal Cramps", value: "Present"},
+        {symptom: "Acne", value: "Present"},
+        {symptom: "Memory Lapse", value: "Present"},
+        {symptom: "Bladder Incontinence", value: "Mild"},
+        {symptom: "Headache", value: "Mild"},
+        {symptom: "Nausea", value: "Mild"},
+        {symptom: "Hair Loss", value: "Not Present"},
+        {symptom: "Bloating", value: "Severe"},
+        {symptom: "Diarrhea", value: "Severe"},
+        {symptom: "Chills", value: "Severe"},
+        {symptom: "Dry Skin", value: "Severe"},
+        {symptom: "Vaginal Dryness", value: "Severe"},
+        {symptom: "Breast Pain", value: "Severe"},
+        {symptom: "Appetite Changes", value: "Not Present"},
       ],
       metadata:{
         HKWasUserEntered:1

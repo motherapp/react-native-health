@@ -10,35 +10,35 @@ Example input options:
 
 ```javascript
 let options = {
-  startDate: new Date(2022, 2, 13).toISOString(), // required
-  endDate: new Date(2022, 2, 13).toISOString(), // optional; default startDate
-  symptoms:[
-    "Mood Changes",
-    "Constipation",
-    "Fatigue",
-    "Hot Flashes",
-    "Lower Back Pain",
-    "Sleep Changes",
-    "Pelvic Pain",
-    "Night Sweats",
-    "Abdominal Cramps",
-    "Acne",
-    "Memory Lapse",
-    "Bladder Incontinence",
-    "Headache",
-    "Nausea",
-    "Hair Loss",
-    "Bloating",
-    "Diarrhea",
-    "Chills",
-    "Dry Skin",
-    "Vaginal Dryness",
-    "Breast Pain",
-    "Appetite Changes"
-  ],
-  metadata:{
-    HKWasUserEntered:1
-  },
+   startDate: new Date(2022, 5, 14).toISOString(), // required
+   endDate: new Date(2022, 5, 14).toISOString(), // optional; default startDate
+   symptoms:[
+      {symptom: "Mood Changes", value: "Not Present"}, // value is optional; (Not Present, Present, Mild, Moderate, Severe)
+      {symptom: "Constipation", value: "Severe"},
+      {symptom: "Fatigue", value: "Severe"},
+      {symptom: "Hot Flashes", value: "Severe"},
+      {symptom: "Lower Back Pain", value: "Severe"},
+      {symptom: "Sleep Changes", value: "Moderate"},
+      {symptom: "Pelvic Pain", value: "Moderate"},
+      {symptom: "Night Sweats", value: "Moderate"},
+      {symptom: "Abdominal Cramps", value: "Present"},
+      {symptom: "Acne", value: "Present"},
+      {symptom: "Memory Lapse", value: "Present"},
+      {symptom: "Bladder Incontinence", value: "Mild"},
+      {symptom: "Headache", value: "Mild"},
+      {symptom: "Nausea", value: "Mild"},
+      {symptom: "Hair Loss", value: "Not Present"},
+      {symptom: "Bloating", value: "Severe"},
+      {symptom: "Diarrhea", value: "Severe"},
+      {symptom: "Chills", value: "Severe"},
+      {symptom: "Dry Skin", value: "Severe"},
+      {symptom: "Vaginal Dryness", value: "Severe"},
+      {symptom: "Breast Pain", value: "Severe"},
+      {symptom: "Appetite Changes", value: "Not Present"},
+   ],
+   metadata:{
+      HKWasUserEntered:1
+   },
 }
 ```
 
@@ -58,92 +58,114 @@ Example output:
 ```json
 [
    {
-      "UUID":"6B33BC38-0C74-4D56-864B-4BB5D491A2FA",
-      "symptom":"Mood Changes"
+      "UUID":"76F34A40-E4FC-4672-BA7E-0A8BED74A0C0",
+      "symptom":"MoodChanges",
+      "value":"Not Present"
    },
    {
-      "UUID":"3E012AC8-6D41-4CE0-9D1A-3E395F55E22C",
-      "symptom":"Constipation"
+      "UUID":"914BCD52-EC8D-4252-97D7-39CE7AE51C69",
+      "symptom":"Constipation",
+      "value":"Severe"
    },
    {
-      "UUID":"B8D1B6F4-F4CB-4097-8278-4DEDB54084C8",
-      "symptom":"Fatigue"
+      "UUID":"BBBF4504-87C0-4FCE-86A4-726E9EF46E29",
+      "symptom":"Fatigue",
+      "value":"Severe"
    },
    {
-      "UUID":"EE550553-8FFE-46DD-AAD1-9FB46C46C76D",
-      "symptom":"Hot Flashes"
+      "UUID":"28DB84E1-95C6-4862-9B69-8A8087846F52",
+      "symptom":"HotFlashes",
+      "value":"Severe"
    },
    {
-      "UUID":"13E395D7-6157-470A-96C9-1BF825205588",
-      "symptom":"Lower Back Pain"
+      "UUID":"FBDAA688-6952-4AC0-A2B0-29FC56B4F7E2",
+      "symptom":"LowerBackPain",
+      "value":"Severe"
    },
    {
-      "UUID":"E27D62A4-5D5B-430B-8D28-FFD1E4356D8F",
-      "symptom":"Sleep Changes"
+      "UUID":"D6F264C1-ADC1-4D60-8F74-BE8036314B8B",
+      "symptom":"SleepChanges",
+      "value":"Moderate"
    },
    {
-      "UUID":"53677DFF-2AA8-4194-A3E8-76FF77EE0C5B",
-      "symptom":"Pelvic Pain"
+      "UUID":"4C543AB0-92B5-4FB3-9B82-90D01BB7F320",
+      "symptom":"PelvicPain",
+      "value":"Moderate"
    },
    {
-      "UUID":"DE49B7AA-B590-4665-A3B8-237B5C911B80",
-      "symptom":"Night Sweats"
+      "UUID":"000F3E2D-2278-4995-B4C0-BA08BD1EC704",
+      "symptom":"NightSweats",
+      "value":"Moderate"
    },
    {
-      "UUID":"BD530004-3E45-4605-9550-E114D1B754F7",
-      "symptom":"Abdominal Cramps"
+      "UUID":"866C9D5F-FD7C-43A3-B589-0DECA84380FB",
+      "symptom":"AbdominalCramps",
+      "value":"Present"
    },
    {
-      "UUID":"459A9F96-0829-4C57-B5BF-4E7BB7D7CA39",
-      "symptom":"Acne"
+      "UUID":"25C0A968-3643-41A1-9709-8CC63B689AD1",
+      "symptom":"Acne",
+      "value":"Present"
    },
    {
-      "UUID":"1F8A4D59-1F32-4DA8-AD02-D19D8F4D1207",
-      "symptom":"Memory Lapse"
+      "UUID":"247BCFF8-DA85-40EF-9761-1130C007DB37",
+      "symptom":"MemoryLapse",
+      "value":"Present"
    },
    {
-      "UUID":"88E391BF-6C63-417E-8BD6-FCC217EE54A7",
-      "symptom":"Bladder Incontinence"
+      "UUID":"10E26490-8C77-4FCB-A60C-65162AD3D136",
+      "symptom":"BladderIncontinence",
+      "value":"Mild"
    },
    {
-      "UUID":"9EE4E8C9-76C9-40FC-A7BF-D7AFAF11727D",
-      "symptom":"Headache"
+      "UUID":"E3131DF3-E2AE-442B-BA85-3F5133DF1959",
+      "symptom":"Headache",
+      "value":"Mild"
    },
    {
-      "UUID":"86E29943-2D57-4034-B582-8C9BE429D65E",
-      "symptom":"Nausea"
+      "UUID":"FBA7B3BE-DCD9-4CA7-808F-02F05C89CEE4",
+      "symptom":"Nausea",
+      "value":"Mild"
    },
    {
-      "UUID":"B7878FED-7EAB-4D6C-BCEB-09D9AFF353C0",
-      "symptom":"Hair Loss"
+      "UUID":"D7254BCE-B6F4-40DE-AA51-65F7A5BD29DA",
+      "symptom":"HairLoss",
+      "value":"Not Present"
    },
    {
-      "UUID":"DB45DC04-D09E-41D8-98D0-8704D08C6234",
-      "symptom":"Bloating"
+      "UUID":"AB2E7756-3EB4-417F-9B9A-92C91B7B43E1",
+      "symptom":"Bloating",
+      "value":"Severe"
    },
    {
-      "UUID":"8580F379-10AC-45B6-9860-5FCDC8A97C43",
-      "symptom":"Diarrhea"
+      "UUID":"CB03F534-C72A-4921-B024-4F68CAC8833B",
+      "symptom":"Diarrhea",
+      "value":"Severe"
    },
    {
-      "UUID":"2F54EF99-48C3-4C10-9DD8-690BCC0C4AE4",
-      "symptom":"Chills"
+      "UUID":"49432555-FB2E-454C-834E-F840974CFFEF",
+      "symptom":"Chills",
+      "value":"Severe"
    },
    {
-      "UUID":"865CB261-62AC-44F7-AD91-4DE2CB158887",
-      "symptom":"Dry Skin"
+      "UUID":"2F153EF5-52E0-4509-843A-42D64AC4E62C",
+      "symptom":"DrySkin",
+      "value":"Severe"
    },
    {
-      "UUID":"56D23980-482D-4C49-9D89-4B7D971613B8",
-      "symptom":"Vaginal Dryness"
+      "UUID":"02208A7A-CF3C-467D-9FED-20DA8A2547C3",
+      "symptom":"VaginalDryness",
+      "value":"Severe"
    },
    {
-      "UUID":"4930C8AB-8017-4FF1-8D87-679B2CAAA4BC",
-      "symptom":"Breast Pain"
+      "UUID":"7600148E-EAE8-4F83-997D-204408E6AC34",
+      "symptom":"BreastPain",
+      "value":"Severe"
    },
    {
-      "UUID":"74B1AA2C-AAB0-4CE2-BAF9-B6BD7948E664",
-      "symptom":"Appetite Changes"
+      "UUID":"396995F7-7D94-4835-A733-4EB3887594FA",
+      "symptom":"AppetiteChanges",
+      "value":"Not Present"
    }
 ]
 ```

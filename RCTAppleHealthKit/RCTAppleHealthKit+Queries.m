@@ -524,14 +524,36 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
                 for (HKCategorySample *sample in results) {
+                    NSInteger val = sample.value;
 
                     NSString *startDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.startDate];
                     NSString *endDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.endDate];
+
+                    NSString *valueString;
+
+                    switch (val) {
+                      case HKCategoryValueSeverityNotPresent:
+                        valueString = @"Not Present";
+                      break;
+                      case HKCategoryValueSeverityMild:
+                        valueString = @"Mild";
+                      break;
+                      case HKCategoryValueSeverityModerate:
+                        valueString = @"Moderate";
+                      break;
+                      case HKCategoryValueSeveritySevere:
+                        valueString = @"Severe";
+                      break;
+                     default:
+                        valueString = @"Present";
+                     break;
+                  }
 
                     NSDictionary *elem = @{
                         @"symptom" : [symptomsMapping valueForKey: query.objectType.description],
                         @"startDate" : startDateString,
                         @"endDate" : endDateString,
+                        @"value" : valueString,
                     };
                     [data addObject:elem];
                 }
